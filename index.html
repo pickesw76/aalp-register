@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AALP 2026 â LCP Registration</title>
+<style>
+  :root {
+    --deep-purple: #21145F;
+    --medium-purple: #5D3CCE;
+    --rose-pink: #D45D85;
+    --light-purple: #6D57DB;
+    --lavender-bg: #F5F3FA;
+    --dark-text: #2D2B3A;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--lavender-bg);
+    color: var(--dark-text);
+    min-height: 100vh;
+  }
+
+  .header {
+    background: linear-gradient(135deg, var(--deep-purple) 0%, var(--medium-purple) 100%);
+    color: #fff;
+    padding: 2rem 1.5rem 1.5rem;
+    text-align: center;
+  }
+
+  .header h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    letter-spacing: 0.5px;
+  }
+
+  .header .subtitle {
+    color: var(--rose-pink);
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+
+  .header .program {
+    margin-top: 0.75rem;
+    font-size: 0.8rem;
+    opacity: 0.8;
+  }
+
+  .container {
+    max-width: 520px;
+    margin: -1rem auto 2rem;
+    padding: 0 1rem;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(33,20,95,0.10);
+    padding: 1.75rem 1.5rem;
+  }
+
+  .card p.intro {
+    font-size: 0.88rem;
+    color: #666;
+    margin-bottom: 1.25rem;
+    line-height: 1.5;
+  }
+
+  .form-group {
+    margin-bottom: 1.1rem;
+  }
+
+  label {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--deep-purple);
+    margin-bottom: 0.3rem;
+  }
+
+  label .req {
+    color: var(--rose-pink);
+    margin-left: 2px;
+  }
+
+  input, select {
+    width: 100%;
+    padding: 0.65rem 0.75rem;
+    border: 1.5px solid #d0cde0;
+    border-radius: 8px;
+    font-size: 0.92rem;
+    color: var(--dark-text);
+    background: #fff;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+  }
+
+  input:focus, select:focus {
+    outline: none;
+    border-color: var(--medium-purple);
+    box-shadow: 0 0 0 3px rgba(93,60,206,0.12);
+  }
+
+  input::placeholder { color: #aaa; }
+
+  .row {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .row .form-group { flex: 1; }
+
+  .btn-submit {
+    width: 100%;
+    padding: 0.85rem;
+    background: linear-gradient(135deg, var(--medium-purple), var(--light-purple));
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    transition: opacity 0.2s, transform 0.1s;
+    letter-spacing: 0.3px;
+  }
+
+  .btn-submit:hover { opacity: 0.92; }
+  .btn-submit:active { transform: scale(0.98); }
+
+  .footer {
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.75rem;
+    color: #999;
+  }
+
+  .success-msg {
+    display: none;
+    text-align: center;
+    padding: 2rem 1rem;
+  }
+
+  .success-msg .check {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: #e8f5e9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    font-size: 2rem;
+  }
+
+  .success-msg h2 {
+    color: var(--deep-purple);
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .success-msg p {
+    color: #666;
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+
+  .error-hint {
+    color: var(--rose-pink);
+    font-size: 0.78rem;
+    margin-top: 0.2rem;
+    display: none;
+  }
+
+  input.invalid, select.invalid {
+    border-color: var(--rose-pink);
+  }
+
+  input.invalid + .error-hint,
+  select.invalid + .error-hint {
+    display: block;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>AALP 2026</h1>
+  <div class="subtitle">Leadership Circle Profile Registration</div>
+  <div class="program">Else School of Management &bull; Millsaps College</div>
+</div>
+
+<div class="container">
+  <div class="card">
+    <div id="formSection">
+      <p class="intro">Welcome! Please complete the fields below so we can set up your Leadership Circle Profile. All fields marked with <span style="color:var(--rose-pink);font-weight:600;">*</span> are required.</p>
+
+      <form id="regForm" novalidate>
+        <div class="row">
+          <div class="form-group">
+            <label>First Name <span class="req">*</span></label>
+            <input type="text" id="firstName" placeholder="First name" required autocomplete="given-name">
+            <div class="error-hint">Required</div>
+          </div>
+          <div class="form-group">
+            <label>Last Name <span class="req">*</span></label>
+            <input type="text" id="lastName" placeholder="Last name" required autocomplete="family-name">
+            <div class="error-hint">Required</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Email Address <span class="req">*</span></label>
+          <input type="email" id="email" placeholder="your.email@example.com" required autocomplete="email">
+          <div class="error-hint">Please enter a valid email</div>
+        </div>
+
+        <div class="form-group">
+          <label>Organization <span class="req">*</span></label>
+          <input type="text" id="organization" placeholder="Your company or agency" required autocomplete="organization">
+          <div class="error-hint">Required</div>
+        </div>
+
+        <div class="form-group">
+          <label>Title</label>
+          <input type="text" id="title" placeholder="Your job title" autocomplete="organization-title">
+        </div>
+
+        <div class="row">
+          <div class="form-group">
+            <label>Work Phone</label>
+            <input type="tel" id="workPhone" placeholder="(601) 555-0100" autocomplete="tel">
+          </div>
+          <div class="form-group">
+            <label>Cell Phone</label>
+            <input type="tel" id="cellPhone" placeholder="(601) 555-0100" autocomplete="tel">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Preferred Contact Method</label>
+          <select id="contactPref">
+            <option value="">â Select â</option>
+            <option value="Email">Email</option>
+            <option value="Work Phone">Work Phone</option>
+            <option value="Cell Phone">Cell Phone</option>
+            <option value="Text">Text Message</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn-submit">Submit Registration</button>
+      </form>
+    </div>
+
+    <div class="success-msg" id="successSection">
+      <div class="check">&#10003;</div>
+      <h2>You're Registered!</h2>
+      <p>Your information has been submitted to the AALP team. You'll receive a confirmation email with next steps for your Leadership Circle Profile.</p>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  AALP 2026 &bull; Else School of Management &bull; Millsaps College
+</div>
+
+<script>
+(function() {
+  var form = document.getElementById('regForm');
+  var TEAM_EMAIL = 'pickesw@millsaps.edu';
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    // Clear previous errors
+    var inputs = form.querySelectorAll('input, select');
+    inputs.forEach(function(el) { el.classList.remove('invalid'); });
+
+    // Validate required fields
+    var firstName = document.getElementById('firstName');
+    var lastName = document.getElementById('lastName');
+    var email = document.getElementById('email');
+    var org = document.getElementById('organization');
+    var valid = true;
+
+    [firstName, lastName, org].forEach(function(el) {
+      if (!el.value.trim()) { el.classList.add('invalid'); valid = false; }
+    });
+
+    if (!email.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+      email.classList.add('invalid');
+      valid = false;
+    }
+
+    if (!valid) return;
+
+    // Collect all data
+    var data = {
+      firstName: firstName.value.trim(),
+      lastName: lastName.value.trim(),
+      email: email.value.trim(),
+      organization: org.value.trim(),
+      title: document.getElementById('title').value.trim(),
+      workPhone: document.getElementById('workPhone').value.trim(),
+      cellPhone: document.getElementById('cellPhone').value.trim(),
+      contactPref: document.getElementById('contactPref').value,
+      timestamp: new Date().toISOString()
+    };
+
+    // Build structured email body for automation parsing
+    var subject = '[AALP-REG] ' + data.firstName + ' ' + data.lastName + ' â ' + data.organization;
+
+    var body = '=== AALP 2026 LCP REGISTRATION ===' + '\n'
+      + 'FIRST_NAME: ' + data.firstName + '\n'
+      + 'LAST_NAME: ' + data.lastName + '\n'
+      + 'EMAIL: ' + data.email + '\n'
+      + 'ORGANIZATION: ' + data.organization + '\n'
+      + 'TITLE: ' + (data.title || 'N/A') + '\n'
+      + 'WORK_PHONE: ' + (data.workPhone || 'N/A') + '\n'
+      + 'CELL_PHONE: ' + (data.cellPhone || 'N/A') + '\n'
+      + 'CONTACT_PREF: ' + (data.contactPref || 'N/A') + '\n'
+      + 'SUBMITTED: ' + data.timestamp + '\n'
+      + '=== END REGISTRATION ===';
+
+    // Open mailto link
+    var mailto = 'mailto:' + TEAM_EMAIL
+      + '?subject=' + encodeURIComponent(subject)
+      + '&body=' + encodeURIComponent(body);
+
+    window.location.href = mailto;
+
+    // Show success after a brief delay (email client opens)
+    setTimeout(function() {
+      document.getElementById('formSection').style.display = 'none';
+      document.getElementById('successSection').style.display = 'block';
+    }, 800);
+  });
+
+  // Clear error on input
+  form.querySelectorAll('input, select').forEach(function(el) {
+    el.addEventListener('input', function() { el.classList.remove('invalid'); });
+  });
+})();
+</script>
+
+</body>
+</html>
