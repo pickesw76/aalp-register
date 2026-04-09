@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AALP 2026 LCP â Contributor Selection</title>
+<style>
+  :root {
+    --deep-purple: #21145F;
+    --medium-purple: #5D3CCE;
+    --rose-pink: #D45D85;
+    --light-purple: #6D57DB;
+    --lavender: #F5F3FA;
+    --dark-text: #2D2B3A;
+    --border: #d8d3e8;
+    --error: #b91c1c;
+    --success: #15803d;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    background: var(--lavender);
+    color: var(--dark-text);
+    padding: 0;
+  }
+  .wrap { max-width: 780px; margin: 0 auto; padding: 24px 16px 64px; }
+  header {
+    background: var(--deep-purple);
+    color: white;
+    padding: 28px 24px;
+    border-radius: 12px 12px 0 0;
+    border-bottom: 4px solid var(--rose-pink);
+  }
+  header h1 { margin: 0 0 6px 0; font-size: 22px; letter-spacing: 0.2px; }
+  header p { margin: 0; font-size: 14px; opacity: 0.92; }
+  main {
+    background: white;
+    padding: 24px;
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 2px 8px rgba(33,20,95,0.08);
+  }
+  .rules {
+    background: var(--lavender);
+    border-left: 4px solid var(--medium-purple);
+    padding: 14px 16px;
+    border-radius: 4px;
+    margin-bottom: 24px;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .rules strong { color: var(--deep-purple); }
+  fieldset {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px;
+    margin-bottom: 20px;
+  }
+  legend {
+    color: var(--deep-purple);
+    font-weight: 600;
+    padding: 0 8px;
+    font-size: 15px;
+  }
+  .sublegend {
+    font-size: 12px;
+    font-weight: 400;
+    color: #6b5b8a;
+    margin-left: 6px;
+  }
+  label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--deep-purple);
+    margin-bottom: 4px;
+  }
+  input, select {
+    width: 100%;
+    padding: 9px 11px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: inherit;
+    background: white;
+    transition: border-color 0.15s;
+  }
+  input:focus, select:focus {
+    outline: none;
+    border-color: var(--medium-purple);
+    box-shadow: 0 0 0 2px rgba(93,60,206,0.15);
+  }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 12px; }
+  .row.triple { grid-template-columns: 2fr 2fr 1fr 0.3fr; align-items: end; }
+  @media (max-width: 560px) {
+    .row, .row.triple { grid-template-columns: 1fr; }
+  }
+  .contributor-row {
+    display: grid;
+    grid-template-columns: 1.2fr 1.5fr 0.6fr 30px;
+    gap: 10px;
+    align-items: end;
+    margin-bottom: 10px;
+  }
+  @media (max-width: 560px) {
+    .contributor-row { grid-template-columns: 1fr; }
+  }
+  .remove-btn {
+    background: transparent;
+    color: var(--rose-pink);
+    border: 1px solid var(--rose-pink);
+    border-radius: 6px;
+    padding: 8px 0;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    line-height: 1;
+    height: 36px;
+  }
+  .remove-btn:hover { background: var(--rose-pink); color: white; }
+  .add-btn {
+    background: var(--lavender);
+    color: var(--medium-purple);
+    border: 1px dashed var(--medium-purple);
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 6px;
+  }
+  .add-btn:hover { background: var(--medium-purple); color: white; }
+  .count-badge {
+    display: inline-block;
+    background: var(--medium-purple);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  .count-badge.warn { background: var(--rose-pink); }
+  .submit-btn {
+    background: var(--deep-purple);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 14px 24px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 16px;
+    transition: background 0.15s;
+  }
+  .submit-btn:hover { background: var(--medium-purple); }
+  .success {
+    display: none;
+    background: #ecfdf5;
+    border: 1px solid var(--success);
+    color: var(--success);
+    padding: 16px;
+    border-radius: 8px;
+    margin-top: 16px;
+    font-size: 14px;
+  }
+  .error-msg {
+    background: #fef2f2;
+    border: 1px solid var(--error);
+    color: var(--error);
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    margin-bottom: 14px;
+    display: none;
+  }
+  .privacy {
+    margin-top: 20px;
+    font-size: 11px;
+    color: #6b5b8a;
+    text-align: center;
+    line-height: 1.5;
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>AALP 2026 LCP â Contributor Selection</h1>
+      <p>Leadership Circle Profile 360Â° Assessment Â· Millsaps College</p>
+    </header>
+    <main>
+      <div class="rules">
+        Please list the people who will provide feedback on your leadership. You must provide <strong>at least 5 contributors total</strong> (10 is recommended) with <strong>at least 1 person in each of the 4 categories</strong>: Boss/Manager, Peers, Direct Reports, and Others. Your submission will be reviewed for completeness before being sent to The Leadership Circle.
+      </div>
+
+      <div class="error-msg" id="errorMsg"></div>
+
+      <form id="cspForm" onsubmit="handleSubmit(event)">
+        <fieldset>
+          <legend>Your Information</legend>
+          <div class="row">
+            <div><label>First Name *</label><input type="text" id="firstName" required></div>
+            <div><label>Last Name *</label><input type="text" id="lastName" required></div>
+          </div>
+          <div class="row">
+            <div><label>Your Email *</label><input type="email" id="email" required></div>
+            <div><label>Your Organization *</label><input type="text" id="organization" required></div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Boss / Manager <span class="sublegend">(min 1) <span class="count-badge warn" id="bossCount">0</span></span></legend>
+          <div id="bossList"></div>
+          <button type="button" class="add-btn" onclick="addContributor('boss')">+ Add Boss/Manager</button>
+        </fieldset>
+
+        <fieldset>
+          <legend>Peers <span class="sublegend">(min 1, 3+ recommended) <span class="count-badge warn" id="peerCount">0</span></span></legend>
+          <div id="peerList"></div>
+          <button type="button" class="add-btn" onclick="addContributor('peer')">+ Add Peer</button>
+        </fieldset>
+
+        <fieldset>
+          <legend>Direct Reports <span class="sublegend">(min 1, 3+ recommended) <span class="count-badge warn" id="reportCount">0</span></span></legend>
+          <div id="reportList"></div>
+          <button type="button" class="add-btn" onclick="addContributor('report')">+ Add Direct Report</button>
+        </fieldset>
+
+        <fieldset>
+          <legend>Others <span class="sublegend">(min 1 â board members, mentors, key stakeholders) <span class="count-badge warn" id="otherCount">0</span></span></legend>
+          <div id="otherList"></div>
+          <button type="button" class="add-btn" onclick="addContributor('other')">+ Add Other</button>
+        </fieldset>
+
+        <button type="submit" class="submit-btn">Submit Contributor List</button>
+      </form>
+
+      <div class="success" id="successMsg">
+        <strong>â Contributor list submitted</strong><br>
+        Your email client has opened with a pre-filled message. Please click <strong>Send</strong> to complete your submission. You'll receive a confirmation from the AALP team shortly.
+      </div>
+
+      <div class="privacy">
+        Your contributor information is confidential and will only be used for the LCP 360Â° assessment process.<br>
+        Data is transmitted to pickesw@millsaps.edu over your email client's secure connection.
+      </div>
+    </main>
+  </div>
+
+<script>
+  const state = { boss: [], peer: [], report: [], other: [] };
+  const TARGET_EMAIL = 'pickesw@millsaps.edu';
+
+  function addContributor(category) {
+    const list = document.getElementById(category + 'List');
+    const idx = state[category].length;
+    state[category].push({});
+    const div = document.createElement('div');
+    div.className = 'contributor-row';
+    div.id = category + '-row-' + idx;
+    div.innerHTML = `
+      <div><label>Name *</label><input type="text" class="c-name" required placeholder="Full name"></div>
+      <div><label>Email *</label><input type="email" class="c-email" required placeholder="name@org.com"></div>
+      <div><label>Years Known</label><input type="number" class="c-years" min="0" max="99" placeholder="e.g. 3"></div>
+      <button type="button" class="remove-btn" onclick="removeContributor('${category}', ${idx})" title="Remove">Ã</button>
+    `;
+    list.appendChild(div);
+    updateCount(category);
+  }
+
+  function removeContributor(category, idx) {
+    const row = document.getElementById(category + '-row-' + idx);
+    if (row) row.remove();
+    updateCount(category);
+  }
+
+  function updateCount(category) {
+    const list = document.getElementById(category + 'List');
+    const count = list.querySelectorAll('.contributor-row').length;
+    const badge = document.getElementById(category + 'Count');
+    badge.textContent = count;
+    badge.classList.toggle('warn', count < 1);
+  }
+
+  function collectContributors(category) {
+    const list = document.getElementById(category + 'List');
+    const rows = list.querySelectorAll('.contributor-row');
+    const items = [];
+    rows.forEach(row => {
+      const name = row.querySelector('.c-name').value.trim();
+      const email = row.querySelector('.c-email').value.trim();
+      const years = row.querySelector('.c-years').value.trim();
+      if (name || email) {
+        items.push({ name, email, years: years || 'N/A' });
+      }
+    });
+    return items;
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    const errorMsg = document.getElementById('errorMsg');
+    errorMsg.style.display = 'none';
+
+    const data = {
+      firstName: document.getElementById('firstName').value.trim(),
+      lastName: document.getElementById('lastName').value.trim(),
+      email: document.getElementById('email').value.trim(),
+      organization: document.getElementById('organization').value.trim(),
+      boss: collectContributors('boss'),
+      peer: collectContributors('peer'),
+      report: collectContributors('report'),
+      other: collectContributors('other'),
+    };
+
+    const total = data.boss.length + data.peer.length + data.report.length + data.other.length;
+    if (total < 3) {
+      errorMsg.textContent = 'Please add at least a few contributors before submitting. You currently have ' + total + '.';
+      errorMsg.style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    // Build structured email body
+    const lines = [];
+    lines.push('=== AALP 2026 LCP CONTRIBUTOR SELECTION ===');
+    lines.push('PARTICIPANT_FIRST_NAME: ' + data.firstName);
+    lines.push('PARTICIPANT_LAST_NAME: ' + data.lastName);
+    lines.push('PARTICIPANT_EMAIL: ' + data.email);
+    lines.push('PARTICIPANT_ORG: ' + data.organization);
+    lines.push('SUBMITTED: ' + new Date().toISOString());
+    lines.push('');
+    const categories = [
+      ['BOSS', 'boss'],
+      ['PEER', 'peer'],
+      ['DIRECT_REPORT', 'report'],
+      ['OTHER', 'other'],
+    ];
+    categories.forEach(([label, key]) => {
+      lines.push('--- ' + label + ' (' + data[key].length + ') ---');
+      data[key].forEach((c, i) => {
+        lines.push(label + '_' + (i + 1) + '_NAME: ' + c.name);
+        lines.push(label + '_' + (i + 1) + '_EMAIL: ' + c.email);
+        lines.push(label + '_' + (i + 1) + '_YEARS: ' + c.years);
+      });
+      lines.push('');
+    });
+    lines.push('=== END SUBMISSION ===');
+
+    const body = lines.join('\n');
+    const subject = '[AALP-CSP] ' + data.firstName + ' ' + data.lastName + ' â ' + data.organization;
+    const mailto = 'mailto:' + TARGET_EMAIL +
+      '?subject=' + encodeURIComponent(subject) +
+      '&body=' + encodeURIComponent(body);
+
+    window.location.href = mailto;
+    document.getElementById('successMsg').style.display = 'block';
+    document.getElementById('cspForm').style.display = 'none';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Pre-populate one row in each category to guide the user
+  addContributor('boss');
+  addContributor('peer');
+  addContributor('peer');
+  addContributor('peer');
+  addContributor('report');
+  addContributor('report');
+  addContributor('report');
+  addContributor('other');
+</script>
+</body>
+</html>
